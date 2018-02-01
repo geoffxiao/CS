@@ -1,2 +1,0 @@
-(and (is-dnf? exp1) (is-dnf? exp2)) ->
-(is-dnf? (list 'and exp1 exp2))
