@@ -1,0 +1,17 @@
+#lang racket
+
+; addition time...
+; carry element
+; smallest element is first bit
+(define (result c a b)
+  (remainder (+ c a b) 3)
+  )
+
+(define (add_help c a b)
+  (cons (result c (first a) (first b))
+        (carry c (first a) (first b))
+        (rest a) (rest b)
+        )
+  )
+
+(define (add a b) (add_help 0 a b))

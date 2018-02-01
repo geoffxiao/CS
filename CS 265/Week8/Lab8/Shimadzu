@@ -1,0 +1,5 @@
+for file in $(ls | egrep "*.txt"); do
+
+	awk '{if (NR > 2) print}' $file > ./Out/$file # second column
+	
+done

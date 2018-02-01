@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project default="run">
+	<description>
+		ant build file for CS265 Lab 7. Geoffrey Xiao, gx26
+	</description>
+
+	<target name="run" depends="prob1, prob2, prob3, prob4, clean">
+		<description>
+			Compiles prob1, prob2, prob3, and prob4. Runs the compiled programs
+			with appropriate arguments. Deletes generated .class files.
+		</description>	
+	</target>
+
+  <path id="project.class.path">
+      <!-- get your current classpath -->
+    <pathelement path='${classpath}'/>
+    <pathelement location='.'/>
+  </path>
+
+	<target name="prob1">
+		<description>
+			Compile and run prob1.java; generates prob1.class file.
+		</description>
+		<javac srcdir="." includes="prob1.java" includeantruntime="false"/>
+		<java classname="prob1">
+			<classpath refid="project.class.path"/>
+			<arg value="Geoff"/>
+		</java>
+		<java classname="prob1">
+			<classpath refid="project.class.path"/>
+			<arg value="CS265"/>
+		</java>
+	</target>
+
+   <target name="prob2">
+		<description>
+			Compile and run prob2.java; generates prob2.class file.
+		</description>
+      <javac srcdir="." includes="prob2.java" includeantruntime="false"/>
+      <java classname="prob2">
+         <classpath refid="project.class.path"/>
+			<arg value="100"/>
+      </java>
+   	<java classname="prob2">
+			<classpath refid="project.class.path"/>
+			<arg value="3"/>
+		</java>
+	</target>
+
+   <target name="prob3">
+		<description>
+			Compile and run prob3.java; generates prob3.class file.
+		</description>
+      <javac srcdir="." includes="prob3.java" includeantruntime="false"/>
+      <java classname="prob3">
+        	 <classpath refid="project.class.path"/>
+			 <arg value="1900"/>
+      </java>
+		<java classname="prob3">
+			<classpath refid="project.class.path"/>
+			<arg value="2000"/>
+		</java>
+   </target>
+
+   <target name="prob4">
+		<description>
+			Compile and run prob4.java; generates prob4.class file.
+		</description>
+      <javac srcdir="." includes="prob4.java" includeantruntime="false"/>
+      <java classname="prob4">
+          <classpath refid="project.class.path"/>
+			<arg value="0"/>
+      </java>
+      <java classname="prob4">
+          <classpath refid="project.class.path"/>
+         <arg value="1"/>
+      </java>
+      <java classname="prob4">
+          <classpath refid="project.class.path"/>
+         <arg value="2"/>
+      </java>
+      <java classname="prob4">
+          <classpath refid="project.class.path"/>
+         <arg value="3"/>
+      </java>	 
+	</target>
+
+
+	<target name="clean">
+		<description>
+			Deletes all .class files in current directory.
+		</description>
+		<delete>
+			<fileset dir="./">
+				<include name="*.class"/>
+			</fileset>
+		</delete>
+	</target>
+
+</project>

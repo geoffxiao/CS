@@ -1,0 +1,51 @@
+Geoffrey Xiao, gx26
+CS265 Lab 3 - Regular Expressions
+
+For all the questions in this lab, I used the egrep utility.
+
+Q1:
+egrep 'the' bright_side_of_life
+
+
+Q2:
+egrep '\<the\>' bright_side_of_life
+
+
+Q3:
+egrep '\<Just\>' bright_side_of_life
+
+
+Q4:
+egrep '(J|j)ust' bright_side_of_life
+
+
+Q5:
+egrep '^(J|j)ust' bright_side_of_life
+
+
+Q6:
+egrep '\<bad\>|'\<mad\>' bright_side_of_life
+
+
+Q7:
+egrep '\<death\>|\<breath\>' bright_side_of_life
+
+
+Q8:
+egrep '\<you(\?|\.|,)$' bright_side_of_life
+
+
+Q9:
+egrep '^\s' bright_side_of_life
+
+
+Q10:
+egrep '^\s*$' bright_side_of_life
+
+
+Q11:
+The following command will give the number of blank lines
+egrep '^\s*$' bright_side_of_life | wc -l
+
+There are 11 blank lines
+

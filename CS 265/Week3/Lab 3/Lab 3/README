@@ -1,0 +1,9 @@
+To use the anagram file use:
+
+bash ./anagram INPUT_FILE OUTPUT_FILE
+
+INPUT_FILE is the file for which we will search for anagrams
+OUTPUT_FILE is the file we output the anagram classes to
+
+OUTPUT_FILE is an optional argument, if is not there, then the program will
+automatically output (and overwrite if out already exists) to a file called out

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	Geoffrey Xiao, gx26
+	11/20/2016	
+
+	CS265, Lab 9
+
+	Test the gInt class using the gIntTest junit program
+
+	java version "1.8.0_111"
+	Java(TM) SE Runtime Environment (build 1.8.0_111-b14)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)
+
+-->
+<project default="gIntTest" basedir='.'>
+
+	<target name="gIntTest" depends="test, compile, clean">
+		<!-- Default is to test, compile, and clean. -->
+	</target>
+
+  	<path id="project.class.path">
+   	<!-- get your current classpath -->
+    	<pathelement path='${classpath}'/>
+		
+		<!-- location of junit.jar -->
+		<pathelement location='/usr/share/java/junit4.jar'/>
+    	<pathelement location='.'/>
+  	</path>
+
+	<target name="compile">
+		<!-- Compile all the java source code files needed for the program. -->
+		<javac srcdir="." includes="gIntTest.java, gInt.java" includeantruntime="false">
+   		<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+   <target name='test' depends='compile'>
+      <!-- test the program -->
+		<junit>
+         <classpath refid="project.class.path"/>
+         <formatter type='plain'/>
+         <test name='gIntTest'/>
+  	   </junit>
+	</target>
+
+	<target name="clean">
+		<!-- Deletes all .class files in current directory. Also delete the
+		generated junit TEST... file-->
+		<delete>
+			<fileset dir="./">
+				<include name="*.class"/>
+			</fileset>
+		</delete>
+	</target>
+
+</project>

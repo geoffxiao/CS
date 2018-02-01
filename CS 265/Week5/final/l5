@@ -1,0 +1,156 @@
+CS265, Lab 5
+Geoffrye Xiao, gx26
+
+Q1: 
+i: A list, or linked list, is a linear collection of data elements. Each
+data element contains a value and points to the next data element. The last element points to
+NULL in a singly linked list. In the doubly linked list, each data element
+points to the next data and to the data before it.
+
+ii: The stack data structure functions just like a stack of items. A data
+element must be inserted at the end of the stack: in a real stack of books,
+you can only place a book on the top of the stack. Only the last, or
+topmost, data element can be removed from the stack, much like in a real
+stack of books. The guiding principle for this data structure is "Last in
+first out": the last element added is the first one that can be removed. The
+stack is a linear data structure.
+
+iii: In the queue, the guiding principle is "First in first out." That is,
+the first added element is the first one that can be removed. If we think
+about the queue as a line of data elements, elements are added at the end of
+the line, and elements are removed from the front of the line. The queue is
+a linear data structure. 
+
+iv: In the dictionary or map data structure, data are stored as (key, value)
+pairs. This data type is similar to an array, save for the fact that in the
+array only numbers can index the array and in the map, keys other than
+numbers can index the array. Each possible key appears at most once.
+
+Q2:
+For a sorted array with n items, the worst case scenario involves lg(n)
+comparisons (logarithm base 2). Every iteration of binary search involves one comparison. 
+Every iteration of binary search halves the search region by half. In the
+worst case, the entire array must be halved until one element remains, which
+takes lg(n) iterations.
+
+Q3:
+For an array with n items, the worst case scenario for linear search 
+involves n comparisons. In the worst case scenario, the value 
+to search for either does not appear in the array or is the very last 
+element in the array. In these cases, the entire array of sized n must be 
+traversed before the search algorithm returns a result.
+
+Q4:
+Linear search is preferable when the data structure is unsorted. Binary
+search, while more efficient, can only operate on a sorted list. Sometimes
+the added cost of soring the data makes binary search less attractive than
+linear search. Linear search is also preferable when the data structure is
+not random access (a linked list for example). In this scenario, a binary
+search function can be implemented, but it would take very long to access
+the midpoint index specified by binary search because accessing 
+the data is not random access or size independent.
+
+Q5: 
+[] mark subarray partition
+** marks the pivot
+Displaying the array before the call to the partition function
+
+[*84* 37  93  82  98  27  63  73   93  27  75  55  45   8]
+[ *8* 37  82  27  63  73  27  75   55  45] 84  93  98  93 
+   8[*37* 82  27  63  73  27  75   55  45] 84  93  98  93 
+   8[*27* 27] 37  63  73  82  75   55  45  84  93  98  93 
+   8  27[*27*]37  63  73  82  75   55  45  84  93  98  93 
+   8  27  27  37[*63  73  82  75   55  45] 84  93  98  93
+   8  27  27  37[*45* 55 ]63  75   73  82  84  93  98  93
+   8  27  27  37  45[*55*]63  75   73  82  84  93  98  93 
+   8  27  27  37  45  55  63[*75*  73  82] 84  93  98  93
+   8  27  27  37  45  55  63[*73*] 75  82  84  93  98  93
+   8  27  27  37  45  55  63  73   75[*82*]84  93  98  93
+   8  27  27  37  45  55  63  73   75  82  84[*93* 98  93]
+   8  27  27  37  45  55  63  73   75  82  84[*93*]93  98
+   8  27  27  37  45  55  63  73   75  82  84  93  93[*98*]
+
+
+Q6:
+The list is: "3" -> "24" -> "06" -> NULL
+
+Q7:
+At the end of the program,
+L = [13, [28, [24, [3, None]]]]
+q = [24, [3, None]]
+p = None
+t = [3, None]
+
+Q8:
+In C, strings are represented by 1D arrays of char types. The function
+strcpy(s1, s2) copies the string pointed to by s2 into s1. The function
+strcat(s1, s2) adds the string pointed to by s2 to the end of s1.
+
+In the first set of program output, the string s and buffer show the same
+thing because they point to the same thing. In the program, 
+	
+	char *s = buffer
+
+is used to assign the string s. buffer is a pointer that points to the first
+element of the buffer array, which represents the buffer string. By assigning s to be
+buffer, s now points to the first element of the buffer array. Essentially,
+s points to the same string as buffer.
+
+In the second output, the following is used to assign s:
+
+	s = (char *) malloc( 100 );
+
+The malloc function requests a free block of memory and returns a pointer to
+the allocated memory. So s now points to a new block of memory. s no longer
+points to the same array buffer does.
+
+The next code segments are:
+
+	strcpy( s, buffer );
+	strcat( s, "... who's never ever been born" );
+
+These two lines modify the string s. buffer is copied into the location s
+now points to, the memory allocated by malloc. strcat adds a string to the
+end of string s. Importantly, s points to a different memory location than
+buffer so buffer is not changed by the strcpy or strcat functions. This
+explains why s and buffer are different. s has the additional "... who'
+s never ever been born" at the end.
+   
+Q9:
+The table looks like this:
+
+0: NULL
+1: NULL
+2: NULL
+3: [Bob, 38] -> [Cos, 86]
+4: [Vera, 99] -> [Nash, 11] -> [Kate, 28] -> [Jaga, 24]
+5: [Jesse, 78]
+6: NULL
+
+Q10:
+
+int find( char *key, int *p_ans)
+// Searches hash table for key
+        // Returns 0, if key not found
+        // Returns 1, if key found
+        // p_ans will have value associated with key if key is found
+{
+
+        int h = hash( key ); // Hash value for the key
+
+        // Traverse linked list at h to search for key
+        entry *p, *q;
+        for( p = table[h]; p != NULL; p = q)
+        {
+                if( strcmp( p->key, key ) == 0)
+                {
+                        *p_ans = p->val; // p_ans will point to the value associated with key
+                        return 1; // Found
+                }
+                q = p -> next;
+        }
+
+        return 0; // Not found
+
+}
+ 

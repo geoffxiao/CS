@@ -1,0 +1,97 @@
+CS265 Lab4
+Geoffrey Xiao, gx26
+
+
+Part 1: Programming Style
+1.1:
+In C, any value other than 0 (such as 1) is TRUE and 0 is FALSE. not_eof should be changed to is_eof, and the value of is_eof should be TRUE.
+
+1.2:
+int issmaller( char *s, char *t )
+{
+	return strcmp(s, t) < 0; /* if s < t, returns TRUE */
+}
+
+
+1.3:
+Read aloud. The names are horrendously difficult to read and pronounce.
+
+1.4:
+if ( c != 'Y' && c != 'y' )
+	return; /* Used DeMorgan's Law */
+
+if ( length > BUFSIZE )
+	length = BUFSIZE;
+/* If length == BUFSIZE, redundant assignment */
+
+flag = !flag;
+
+quote = (*line == '"')
+
+bit = val & 1
+
+1.5:
+In C and C++, the order of execution of side effects is undefined. Both val and ch will be modified by the scanf function, but we do not know whether val or ch will be read first by scanf.
+
+1.6:
+1 1
+1 2
+2 1
+
+1.7:
+if ( !stty(stdin) && !stty(stdout) && !stty(stderr) )
+	return 0;
+
+return retval 
+
+for ( k = 0; k < 5; k++ )
+{
+
+	scanf( %lf, &dx );
+	x += dx;	
+
+}
+
+1.8:
+In this loop, this.getName(count) will operate with count values from 1 to total. I will change the loop so the value of count used by this.getName(count) iterates from 0 to total - 1.
+
+for ( count = 0; count < total; count++ )
+{
+	if( this.getName( count ) == nametable.userName() )
+		return true;
+}
+
+1.9:
+In macros, the marco body and the argument should be parenthesized. This is necessary because the marcro will textually substitute in the code. In order to ensure that the order of operations work as desired, parentheses must be used. The ? operator is also unnecessary, we can just return the result of the comparison operations. Also, the argument c may be evaluated more than once, once in each comparison. This may be an issue if the argument c produces side effects. Adding parentheses and removing the ? operator, the macro is:
+
+#define ISDIGIT(c) ( ((c) >= '0') && ((c) <= '9') )
+
+1.10:
+#define FT2METER 0.3048
+#define METER2FT ( 1.0 / FT2METER )
+#define MI2FT 5280.0
+#define MI2KM ( MI2FT * FT2METER / 1000.0 )
+#define SQMI2SQKM ( MI2KM * MI2KM )
+
+1.11
+The comment describing the return of the insert method is incorrect. The return type is void, yet the comment says that the method will return a 1 or 0.
+
+The if statement will return TRUE if n > max or if n is even. But the comment says that the if statement tests for an even number. This is incorrect because the if statement also tests if n > max.
+
+The comment describing the function is okay. It accurately describes what the function does. It would, however, be better to rewrite the function as:
+
+void write_message()
+{
+	fprintf(fout,"%d %s\n%d %s\n%d %s\n",
+		line_number + 1, HEADER,
+		line_number + 2, BODY,
+		line_number + 3, TRAILER);
+	line_number =+ 3;
+}
+
+This rewritten function is more clear and no comments are necessary.
+
+
+Part 2: Python
+
+Python programs attached.

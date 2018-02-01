@@ -1,0 +1,137 @@
+Geoffrey Xiao, gx26
+CS265 Lab 2
+
+Q1:
+The output is all the files that have been modified in the past 2 days. The
+find command searches the path specified for all the filenames that pass the
+tests specified by the options. The path to search was . which is the parent
+path, which is the /home/gx26/ path. The -mtime -2 option specifies that the
+command will search for files that have been modified in the past 2 days.
+The -mtime is an option for find and -2 is an argument for -mtime. The
+-print option prints the files that were found. The -type f specifies that
+the find command will search for files, as opposed to directories. 
+
+Here is the output:
+./.bash_history
+./CS265/Lab_1/funny
+./CS265/Lab_1/hello.bash
+./CS265/Lab_1/vi_lab
+./CS265/Lab_1/lab1
+./CS265/Lab_1/lab1_copy
+./public_html/index.html
+./public_html/annoy.cc
+./public_html/annoy
+./public_html/itemList
+./public_html/itemList-2cols
+./public_html/TelecomTruths
+./public_html/UnitTestingPhase
+./.viminfo
+./.getopts_ex.swp
+./.lab2.swp
+./lab2
+./1
+
+
+Q2:
+The touch command created a gotMe.bash file in the temp path. I can use the
+following to find all .bash files:
+
+find /home/gx26 -name *.bash -type f -print
+
+The -name option specifies that the find command will search for files that
+match the name specified which is *.bash. * is a wildcard which can stand
+for any sequence of characters.
+
+
+Q3: 
+The resulting output of the code in Q2  was:
+/home/gx26/CS265/Lab_1/hello.bash
+/home/gx26/temp/gotMe.bash
+
+
+Q4:
+wc breadIsDangerous.txt gives the following:
+
+  97  499 2960 breadIsDangerous.txt
+
+According to man wc, the wc command gives the newline, word, and byte counts
+for the specified file. So the file breadIsDangerous.txt has 97 newlines,
+499 words, and 2960 bytes.
+
+
+Q5:
+grep the CS265\Lab_2\breadIsDangerous.txt -w | wc
+
+The output is: 
+
+      7      75     397
+
+The grep the  command will return all the lines that contain the. The -w
+option tells grep to only return the lines that contain the entire word of
+the. The | pipes the output of grpe to wc. wc then counts the lines.
+
+There are 7 lines in the breadIsDangerous.txt file that contain the entire
+word "the."
+
+
+Q6:
+I accepted all the changes ispell proposed. A new file spellExample.bak was created. The spellExample.bak file contains
+the original unmodified spellExample file. The spellExample file now
+contains the changes that I accepted.
+
+
+Q7:
+The result of diff spellExample spellExample.bak is:
+
+1c1
+< I went to a garden party
+---
+> I went to a gadren party
+3c3
+< bunch of my old friends did something
+---
+> bnuch of my old freinds did somehting
+6d5
+< An extra line
+
+The diff command displays the differences between two files. The 1c1 means
+that line 1 in the first file argument (spellExample) was changed (c) to line 1 in the
+second file argument (spellExample.bak). The 3c3 means that line 3 of
+spellExample was changed to produce line 3 of spellExample2. The < indicates
+the first file argument (spellExample) and the > indicates the second file
+argument (spellExample.bak). 6d5 means that line 6 of file 1 was deleted:
+line 6 of file 1 is empty and line 6 of file 2 is "An extra line".
+
+
+Q8:
+There is not output for diff spellExample spellExample. When the diff
+command produces no output when the files are identical. It is expected that
+spellExample and spellExample are identical because they are the same file.
+
+
+Q9:
+grep dough breadIsDangerous.txt
+echo $?
+
+gives 0
+
+grep uniqueString breadIsDangerous.txt
+echo$?
+
+gives 1
+
+grep dough noSuchFile
+echo$?
+
+gives 2
+
+$? gives the exit status of the last command. According to the man pages for
+grep, the exit status of grep is as follows: 0 if a line was selected, 1 if
+no lines were selected, and 2 if an error occurred. For the first code
+sequence, the grep found lines that contained dough in the
+breadIsDangerous.txt file so 0 was returned at exit. No lines in the
+breadIsDangerous.txt file contain uniqueString so 1 was the exit return.
+There is no file called noSuchFile so an error occurred and 2 was returned.
+
+
+Q10, Q11, Q12 are attached.

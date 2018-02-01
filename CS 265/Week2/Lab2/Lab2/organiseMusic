@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Files are listed as:
+#	  Artist - Song.mp3
+# We wish to make folders with Artist/
+# and add the Song.mp3 to the corresponding Artist directory
+# 
+# CS265 Lab 2
+# Geoffrey Xiao gx26
+
+# Loop through the contents of the current directory
+for file in * ; do
+
+	# if it is a file
+	if [ -f "$file" ] ; then
+
+		file_name=${file%%".mp3"} # File name is left of .mp3
+		file_ext=${file##"$file_name"} # File extension is right of file name
+		
+		# If the file is a .mp3 file
+		if [ "$file_ext" = ".mp3" ] ; then		
+
+			# Extract the Artist, which is to the left of the " - "
+			artist=${file%%" - "*} 		
+	
+			# Extract the Song, which is to the right of the " - "
+			song=${file##*" - "}
+
+			# Check to see if the Artist directory already exists
+			# If it doesn't exist then make it
+			if [ ! -d "$artist" ] ; then
+
+				mkdir "$artist" # Make the Artist directory	
+
+			fi # end if
+
+			mv "$file" "./$artist/$song" # move the Song to the Artist directory and rename
+
+		fi # end if
+	
+	fi # end if
+
+done # end for

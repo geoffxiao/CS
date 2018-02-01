@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+# CS265 Lab 3 - Finding Anagrams
+# Geoffrey Xiao, gx26
+# 
+# This program will find the anagram classes for an input file
+# Will output the anagram classes to a file called out, or if you specify
+# your own output file it will output there
+#
+# Call: anagram INPUT_FILE OUTPUT_FILE
+#		OUTPUT_FILE is optional, where the angrams are outputted to
+# 		INPUT_FILE is the input file to search for anagrams
+
+
+# Check for the necessary files
+if [[ -e sign.c && -e squash.awk && -e "$1" ]] ; then
+
+	gcc -osign -w  sign.c # Compile sign.c and create a program called sign
+	# -w to suppress warnings
+
+	sign_file=$(mktemp) # Create temporary place to store the file
+	
+	(./sign < "$1") > $sign_file # Find the keys for the file 
+
+	sorted_file=$(mktemp) # Temporary file
+
+	# Sort the key file and use squash.awk to find anagram classes
+	(sort -k1 $sign_file | awk -f squash.awk) > $sorted_file
+	
+	anagram_classes=$(mktemp) # another temporary file
+
+	# awk command prints the number of words for each line
+	# then sort to find the line with the most anagrams
+	(awk '{print NF " " $0}'  $sorted_file) | sort -n > $anagram_classes
+
+	tail $anagram_classes # print the 10 most frequently occuring anagrams
+
+	# No second argument, just output to out
+	if [[ $# < 2 ]] ; then
+
+		 cat $anagram_classes > out # output the anagram classes to out
+
+	# If a second argument exists, output to that file
+	else
+
+		cat $anagram_classes > "$2" # output to the file
+
+	fi
+
+# If files are missing
+else
+
+	echo "Please ensure that sign.c, squash.awk, and the input file are in the same directory
+as anagram"
+
+fi 

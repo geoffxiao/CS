@@ -1,0 +1,150 @@
+Geoffrey Xiao, gx26@drexel.edu
+CS 265 Lab 1
+
+Q1: Whenever the Bash shell is started interactively, the .bashrc script is
+run. In an interactive shell, the user can interact with the shell.
+Non-interactive shells do not interact with the user. .bash_profile is run
+to configer the shell when you first login to the machine. If you have
+already logged in and you open a terminal window, .bashrc is exectued but
+.bash_profile is not.
+
+
+Q2: The file has been created and edited.
+
+
+Q3: 
+The results of ls -l are:
+
+total 52
+-rw-r--r--  1 gx26 gx26  8059 Sep 23 22:28 funny
+-rwxr-xr-x  1 gx26 gx26   240 Sep 23 22:28 hello.bash
+-rw-rw-r--+ 1 gx26 gx26   435 Sep 23 22:30 lab1
+-rw-rw-r--  1 gx26 gx26     0 Sep 23 22:34 TEST
+-rw-rw-r--  1 gx26 gx26 33968 Sep 23 22:22 vi_lab
+
+
+Q4:
+
+chmod 644 gives the following permissions:
+User = Read and Write
+Group = Read
+World = Read
+
+
+Q5:
+chmod 755 gives the following permissions:
+User = Read, Write, and Execute
+Group = Read and Execute
+World = Read and Execute
+
+
+Q6:
+chmod 644 funny gives me, the user, read and write privileges for the file
+funny. I can still
+read funny with the cat command.
+
+
+Q7:
+chmod 644 hello.bash gives me, the user, read and write privileges for the
+file hello.bash. I can still read hello.bash with the cat command.
+
+
+Q8:
+I cannot execute hello.bash
+
+
+Q9:
+Two ways to give myself execution permissions for hello.bash are:
+chmod 7## hello.bash
+chmod 5## hello.bash
+
+# can be any permission (1 through 7).
+
+Q10: chmod 400 funny changes my user permissions to read only. I can open
+the funny file in the vim editor but I cannot save the changes I made
+because the file is read only.
+
+
+Q11:
+ls *:
+
+	annoy
+	annoy.cc
+	index.html
+	itemList
+	itemList-2cols
+	TelecomTruths
+	UnitTestingPhase
+
+ls a*
+	annoy
+	annoy.cc
+
+ls *m*
+	index.html
+	itemList
+	itemList-2cols
+	TelecomTruths
+
+ls anno?
+	annoy
+
+ls annoy?
+	ls: cannot access 'annoy?': No such file or directory
+
+
+Q12:
+Two vim editors were opened, one for the file 'a' and one for the file 'space'.
+
+
+Q13:
+echo Is a < b?
+	: No such file or directory
+
+echo "Is a < b?"
+	Is a < b?
+
+echo "\$USER is $USER"
+	$USER is gx26
+
+echo '\$USER is $USER'
+	\$USER is $USER
+
+echo "Today is 'date'"
+	Today is Sat Sep 24 03:12:25 EDT 2016
+
+echo "Today is $(date)"
+	Today is Sat Sep 24 03:14:30 EDT 2016
+
+echo 'Today is date''
+	Today is 'date'
+
+echo -e "Files that start w/e:\n'ls e*'"
+	Files that start w/e:
+	'ls e*'		
+
+
+Q14:
+The sort command with no options simply sorts the entire line of text by comparing the text in ASCII. The sort -n command will sort the lines numerically. This is why the numbers are in order when sort-n is used.
+
+
+Q15:
+sort -nr will sort the list the 8 items with the highest numbers in descending order. The -n option sorts the lines of text numerically and -r will reverse the order so the highest number is first and the sorted list is in descending order.
+
+
+Q16: 
+The tar file has been replaced with a tar.gz file.
+
+
+Q17:
+The *.tgz file is now a *.tar file.
+
+
+Q18:
+grep "Vacation"
+
+G19:
+The following command is used:
+find /home/gx26 -name lab1
+
+ 

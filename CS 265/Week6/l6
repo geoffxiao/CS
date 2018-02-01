@@ -1,0 +1,192 @@
+CS265 Lab 6
+Geoffrey Xiao, gx26
+
+
+Q1:
+add() adds a suffix to a State. add() also modifies the prefix argument
+passed to it by removing the first element and adding the suffix to the end: 
+after the suffix has been added, the prefix is changed to the next prefix. addSuffix() adds 
+a word to a suffix list. addSuffix() does not modify the prefix.
+
+
+Q2:
+lookup takes a prefix and looks for the State with the prefix in the
+statetab hash table. If the State with the specified prefix is found, a
+pointer to that State is returned. The second argument of lookup is an integer and determines
+ what happens if the State with the specified prefix is not in the statetab hash table. 
+If the integer is 0, a pointer to NULL is returned. If the integer is 1, a new State 
+is created. This State will have the prefix that was originally searched for but it 
+will not have any Suffix yet.
+
+The functions add() and generate() call the function lookup.
+
+
+Q3:
+The statetab table contains State pointers. The corresponding States
+are:
+
+Prefix     | Suffix List
+------------------------
+NULL, NULL | It's
+Null It's  | a
+It's a     | new
+a new      | dawn
+
+The State ( new, dawn | NULL ) is not yet part of the statetab hash table.
+After build( prefix, stdin ) is called, add( prefix, NONWORD ) adds the
+State ( new, dawn | NULL ) to the state tab hash table.
+
+a. 3
+b. 3
+c. 2
+d. 1
+
+
+Q4:
+Using pointers instead of copying the strings saves memory; it ensures that
+the total number of strings stored in the program is equal to the number of
+words in the input file. If the strings were copied, the necessary memory
+storage may balloon to unusable sizes. Additionally, storing the strings as
+pointers saves time because creating a new string and copying the string
+takes time.
+
+
+Q5:
+The main drawback is that modifying one string will cause changes to propagate
+through the entire program. As such, once a the State or Suffix have been
+created it is very difficult to modify the strings stored in each data
+structure.
+
+
+Q6:
+// Clean up statetab hashtable
+void cleanup(State *statetab[NHASH])
+{
+	int i, k;
+	State *sp;
+	Suffix *s;
+
+	// loop through array of State pointers
+	for(i = 0; i < NHASH; i++)
+	{		
+		// loop through linked list of States
+		for(sp = statetab[i]; sp != NULL; sp = sp->next)
+		{	
+			// clean up prefix array of State
+			for(k = 0; k < NPREF; k++)
+			{
+				free(sp->pref[k]);
+			}
+			// clean up words in suffix list
+			for(s = statetab[i]->suf; s != NULL; s = s->next)
+			{
+				free(s->word);
+			}
+			// free State and Suffix of Statee
+			free(sp->suf); 
+			free(sp);
+		}
+	}
+}
+
+
+Q7:
+To test if my function works correctly, I called cleanup( statetab ) and
+then I used the following function to print all the values in the statetab hash
+table:
+
+void printtable(State *statetab[NHASH])
+{
+   State *sp;
+   Suffix *s;
+   int i;
+   for(i = 0; i < NHASH; i++)
+   {
+      for(sp = statetab[i]; sp != NULL; sp = sp->next)
+      {
+         printf("Prefix[0]:%s\n",sp->pref[0]);
+         printf("Prefix[1]:%s\n",sp->pref[1]);
+         for(s = sp->suf; s != NULL; s = s->next)
+         {
+         printf("Suffix:%s\n",s->word);
+         }
+      }
+   }
+}
+
+If the cleanup function worked correctly, there should be no strings remaining in 
+the statetab hash table. My function worked correctly because the printtable 
+function shows that there are no prefixes or suffixes remaining in the statetab 
+hash table.
+
+The biggest difficulty I had with Q6 was determining how to iterate through the 
+entire hash table and all the strings stored in memory. It was also difficult 
+to use the free() function because it can only be used to free dynamically allocated memory.
+
+
+Q8:
+In C, there is no way to check if a pointer is already freed. I can,
+however, set the pointer to NULL after I freed it. Next time when free is
+done, free(NULL) does nothing and each string is freed only once.
+
+
+Q9:
+The prefixes are stored in a deque, which is double-ended queue. The deque 
+allows for O(1) push and pop at the front and back of the deque. Removing 
+the first prefix and adding the suffix to the end of the prefixes allows for the 
+next prefix to be formed. Removing an element from the front and inserting an 
+element at the end are O(n) for vectors.
+
+
+Q10:
+The map container stores the Prefix and the suffixes. The strings 
+in the Prefix deque are the keys to the suffixe satellite data.
+
+
+Q11:
+The suffixes are stored in a vector of strings.
+
+
+Q12:
+The main advantage is that the Standard Template Library (STL) contains code 
+that implements the deque, vector, and map data structures. Unlike in C, 
+where we had to implement our own linked lists and hash tables, such code 
+is already provided for in C++. This makes the code shorter and more compact. 
+Additionally, it is easier to write the program in C++ due to the availability of the STL.
+
+
+Q13:
+The main drawback is that the C++ program runs more slowly than C. 
+While the specific data structures had to be implemented in C, C is a lower 
+level language. As such the C program runs more quickly than the C++ implementation.
+
+
+Q14:
+The prefixes are stored in 2-element tuples. Tuples are immutable.
+
+
+Q15:
+Python has a built-in dict data structure. The prefixes are the keys and 
+the satellite data are the suffixes. The dict data structure is essentially a hash table.
+
+
+Q16:
+The suffixes are stored in a Python list. A Python list is not a linked list, but rather a vector.
+
+
+Q17:
+The Python implementation takes up just as few lines of code as the C++ version, 
+but runs significantly faster according to the tests shown in the lecture slides. 
+Python syntax also reads more naturally than C++ syntax, so it may be easier 
+to read and understand the Python version. The statetab is faster in Python than 
+in C++: the dict data structure in Python has O(1) insertion and access, unlike 
+the C++ map, which has O(lg n) insertion and deletion. Also the Python code does 
+not need to be compiled; it can be run as a script. This makes debugging and 
+running the Python program more simple than the C++ one. Python also has built-in 
+memory management unlike C++.
+
+
+Q18:
+The main drawback of the Python program is that because it is an interpreted 
+language, it runs slower than a compiled language like C++. This does not 
+appear to be an issue with the Markov program.

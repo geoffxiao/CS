@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+#
+# Lab 4 -- Python, Q3
+# Geoffrey Xiao, gx26
+# 
+# Reads ids and creates dictionary to store the IDs and the names
+# 
+# To call:
+#  ./id.py INPUT_FILE
+#
+# Output:
+# Two columns: ID and name
+
+import sys
+
+filename = sys.argv[1] # The file name
+f = open(filename, 'r') # Open file for reading
+
+ids = dict() # dictionary to store IDs and names
+
+# Read each line in file and store it in list
+for line in f :
+	split = line.split(' ', 1) # 1 indicates max times to split
+	ids[int(split[0])] = split[1].rstrip() # convert str to int, also strip newline character
+
+# Print the dictionary sorted by ID number
+print "%10s %40s" % ('ID', 'Name')
+for key in sorted(ids):
+	print "%10s %40s" % (key, ids[key])

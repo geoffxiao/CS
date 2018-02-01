@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Geoffrey Xiao
+# Lab 2 reextend script
+#
+# Accepts two file extensions as command line arguments and renames all
+# files with the first extension within the current working directory to
+# have the second extension instead
+
+for file in * ; do
+
+	ext1="$1"; # What files to rename
+	ext2="$2"; # What to rename the files to
+
+
+	# If it is a file
+	if [ -f "$file" ] ; then
+
+		file_name=${file%%$ext1} # file name is left of extension
+		file_ext=${file##$file_name} # extension is right of file name	
+
+			# If the file's current extension matches what we are trying to
+			# replace
+			if [ "$file_ext" = "$ext1" ] ; then
+			
+				new_file=${file_name}${ext2}	# Create the new file + extension	
+				mv "$file" "$new_file" # rename file using mv command
+
+			fi # end if
+
+	fi # end if
+
+done # end for loop
+ 

@@ -1,0 +1,81 @@
+CS265, Lab 8
+Geoffrey Xiao, gx26
+
+Part 1: Interfaces
+Q1.
+i. Hiding implementation details means that the user should not be exposed
+to how the code works. The user simply has to know that it works as it is
+supposed to. This is important because the hidden implementation details can
+be changed (to improve the code, perhaps) without affecting the client. This
+also makes the code modular, which is easier to test and replace if
+necessary.
+
+ii. A small, orthogonal set of primitives means that the necessary number of
+functions are provided and that the functions do not overlap in their
+capabilities. Too many primitives or interface features makes the interface
+difficult to learn and difficult to maintain and write. 
+
+iii. The functions in the interface should have limited side effects. The
+functions should not create new files or modify global variables, for
+example. If there are any side effects, they should be clearly documented.
+Also if the code needs external services, these should be clearly stated.
+
+iv. Consistency includes using consistent naming schemes and function
+argument orders. For example, the functions in the interface should all 
+have the same order of arguments: if fncA and fncB take a string and integer
+argument, both should have either the string first and the integer second or
+the integer first and the string second in the function argument header.
+This makes it easy to learn how to use the interface.
+
+Q2.
+This implementation cannot handle long inputs. The maximum line size is 199
+characters and the program can only handle a maximum of 20 fields. 
+It also cannot handle quoted fields: for example, "'hello'" turns into hello (all
+the quotes are removed). The input line is not saved and is changed by the
+program. Also the program stores the fields in a global variable called
+"field". This means csvgetline1.c cannot be called simultaneously: you can
+only use csvgetline1.c on one line of text at a time. 
+Lastly, cvsgetline1.c can only operate on already opened files.
+
+Q3.
+Now, there are no limits to the input line length as long as there is enough
+memory in the computer. csvgetline2.c no longer modifies the input line, it
+instead makes a copy of the input line and works on the copy. Embedded
+quotes are also supported. "x""y" will parse to x"y.
+
+Q4.
+There are still several issues with csvgetline2.c. First, you cannot use
+csvgetline2.c to parse 2 different CSV files at the same time because it
+uses global variables. The input line is stored in a variable called line
+and the fields are stored in an array called field. Both of these variables
+are global, so using csvgetline2.c on two different files will cause the
+data from one file to overwrite that of the other. Another issue is the fact
+that the data in the variables line and field are not saved from one input
+line to the next. Therefore, the data is deleted on each use of
+csvgetline2.c.
+
+Q5.
+In the C++ implementation, a class called Csv is created. This allows
+multiple files to be parsed simultaneously. The data from one input line is
+also saved. The main issue with the C++ implementation is that it is slower
+than the C version.
+
+Q6.
+The four main guiding principles for a good interface are: hide
+implementation details, choose a small, orthogonal set of primitives, don't
+reach behind the user's back, and consistency. The C++ implementation
+satisfies the first principle because the very concept of an object implies
+encapsulation and implementation hiding. The second principle is also
+satisfied because there are only three primitives accessible to the user:
+getline, getfield, and getnfield. All of these functions perform different
+tasks. The implementation also satisfies the third rule. The program does
+not modify the input file and doesn't create undocumented side effects.
+Lastly, the implementation is consistent. The naming conventions and
+function constructions are all similar. Overall, the C++ interface adheres
+to the guidelines for a good interface.
+
+Q7.
+See Attached
+
+Part 2: Make lab
+See Attached

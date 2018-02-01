@@ -1,0 +1,93 @@
+CS265 Lab 10
+Geoffrey Xiao, gx26
+
+Q1.
+
+						|						   T(n) / f(n)								|
+						-------------------------------------------------------
+	  |   T(n)		| f(n) = ...														|
+  n  |  User Time |    1	| log(n)	|    n	|n*log(n)|n*sqrt(n)|	 n^2	|
+-------------------------------------------------------------------------
+1E+03|1.92E+02	   |1.92E+02|6.40E+01|1.92E-01|6.40E-02|6.07E-03 |1.92E-04
+1E+04|2.39E+03	   |2.39E+03|5.98E+02|2.39E-01|5.98E-02|2.39E-03 |2.39E-05
+2E+04|5.15E+03	   |5.15E+03|1.20E+03|2.57E-01|5.98E-02|1.82E-03 |1.29E-05
+3E+04|8.07E+03	   |8.07E+03|1.80E+03|2.69E-01|6.01E-02|1.55E-03 |8.97E-06
+4E+04|1.11E+04	   |1.11E+04|2.40E+03|2.76E-01|6.01E-02|1.38E-03 |6.91E-06
+5E+04|1.42E+04	   |1.42E+04|3.01E+03|2.83E-01|6.02E-02|1.27E-03 |5.66E-06
+6E+04|1.71E+04	   |1.71E+04|3.59E+03|2.86E-01|5.98E-02|1.17E-03 |4.76E-06
+
+
+From the table it can be seen that the runtime is loosely bounded above by
+the functions n^(3/2) and n^2, as T/f for these functions tends to zero as
+n->infinity. The runtime is also loosely bounded below by the functions 1,
+log(n), and n as T/f tends to infinity as n->infinity. Therefore, n^(3/2)
+and n^2 are small o functions. 1, log(n), and n are small omega functions.
+
+The function n*log(n) appears to be a big Theta function for the run-time.
+T/f, where f is n*log(n), tends to a constant (~6E-2) as n->infinity. The 
+n=1E3 data point bucks the trend, but we are concerned about the asymptotic
+(n->infinity) behavior of runtime so we can ignore the n=1E3 data point.
+Overall, n*log(n) satisfies the conditions for big Theta. 
+
+sort1 used the quicksort algorithm, which has a big O, loose upper bound, of 
+n*log(n). The log(n) factor arises from the recursive partitioning of the 
+array. The n factor arises from the from the fact that it takes n steps to 
+sort each partition. From inspection, it appears that all of the input 
+files (ins.####) are already sorted. An already sorted array can cause 
+quicksort's big O to balloon to O(n^2) if the pivot is chosen as the first 
+element. But in this case, the quicksort.c algorithm chooses a pivot 
+randomly. The random pivot choosing makes the O(n^2) unlikely and the
+O(n*log(n)) average case scenario more likely. Still, big O is a loose upper 
+bound while big Theta is a tight upper bound, and big O and big Theta do 
+not mean the exact same thing. Nevertheless, the data shows that a n*log(n) 
+function satisfies the properties of a big Theta  function. The n*log(n) big
+Theta can also be justified by considering the quicksort algorithm.
+
+
+Q2:
+
+								  |							T/f							 |
+--------------------------------------------------------------------------
+	  |	 T(n)	  |	     |		f(n) = ...										 |
+  n  |# of swap()|log(n)  |	n	  |n*log(n)|n*sqrt(n)|	n^2	|	n^1.06 |
+--------------------------------------------------------------------------
+1E+03|3.41E+06	  |1.14E+06|3.41E+03|1.14E+03|1.08E+02 |3.41E+00|	2.25E+03
+1E+04|4.56E+07   |1.14E+07|4.56E+03|1.14E+03|4.56E+01 |4.56E-01|	2.63E+03
+2E+04|9.82E+07   |2.28E+07|4.91E+03|1.14E+03|3.47E+01	|2.46E-01|	2.71E+03
+3E+04|1.54E+08   |3.44E+07|5.13E+03|1.15E+03|2.96E+01	|1.71E-01|	2.76E+03
+4E+04|2.10E+08   |4.57E+07|5.25E+03|1.14E+03|2.63E+01	|1.31E-01|	2.78E+03
+5E+04|2.66E+08   |5.67E+07|5.33E+03|1.13E+03|2.38E+01	|1.07E-01|	2.78E+03
+6E+04|3.20E+08   |6.70E+07|5.34E+03|1.12E+03|2.18E+01	|8.90E-02|	2.76E+03
+
+Even though the T/(n*log(n)) continues to decrease at n=6E4, the percentage
+decrease is less than 1%, and for the most part, T/(n*log(n)) can be
+constant as n->infinity. Overall n*log(n) remains a good big Theta
+function. n^1.06 produces a more constant T/f relation as
+n->infinity, but n*log(n) remains a suitable big Theta function. The big
+Theta of n*log(b) can again be attributed to the quicksort algorithm as
+discussed in Q1.
+
+Interestingly, the relationship between run-time and the number of swaps is
+pretty linear:
+
+Run Time	| # Swaps  | Runtime/# Swaps
+--------------------------------------
+1.92E+02	| 3.41E+06 |	5.63E-05
+2.39E+03	| 4.56E+07 |	5.24E-05
+5.15E+03	| 9.82E+07 |	5.24E-05
+8.07E+03	| 1.54E+08 |	5.25E-05
+1.11E+04	| 2.10E+08 |	5.26E-05
+1.42E+04	| 2.66E+08 |	5.31E-05
+1.71E+04	| 3.20E+08 |	5.35E-05
+
+Even though Runtime / # Swaps fluctuates, the maximum deviation percent is
+at most 7%. The linear relationship makes sense because the sort1 program
+calls swap() the most. And so long as each call to swap() takes the same 
+amount of time, a reasonable assumption, the run time is dominated by 
+the number of calls to swap(). 
+
+There may also be some errors in our data collection. The builtin time
+utility may impact the run time of the program. Also other programs and
+processes being run at the same time as sort1 could influence the run time
+of sort1. Also, the pivot is being chosen randomly, so there is random error
+in our experiment. 
